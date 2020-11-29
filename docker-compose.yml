@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db:
+    image: mariadb:10.5.8
+    container_name: docker-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+    volumes:
+      - ~/docker-storage/mariadb/:/var/lib/mysql

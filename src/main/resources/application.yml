@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/boot_starter
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: 1234
+
+jwt:
+  secret-key: 'jwt-scret-key'
+  token-valid-time: 1800000
