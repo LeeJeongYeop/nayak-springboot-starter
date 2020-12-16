@@ -2,6 +2,7 @@ package com.nayak.starter.auth;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
+import com.nayak.starter.utils.CookieUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -40,6 +42,12 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
+        // if you use cookies, you need to check the referrer.
+        Cookie tokenCookie = CookieUtils.getCookie(request, "X-AUTH-TOKEN");
+        if (tokenCookie != null) {
+            return tokenCookie.getValue();
+        }
+
         return request.getHeader("X-AUTH-TOKEN");
     }
 
