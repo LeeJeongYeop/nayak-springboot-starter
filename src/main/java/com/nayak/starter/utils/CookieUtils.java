@@ -1,5 +1,7 @@
 package com.nayak.starter.utils;
 
+import java.util.Optional;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,18 +18,19 @@ public class CookieUtils {
         return token;
     }
 
-    public Cookie getCookie(HttpServletRequest request, String cookieName) {
+    public Optional<String> getCookieValue(HttpServletRequest request, String cookieName) {
         final Cookie[] cookies = request.getCookies();
 
         if (cookies == null) {
-            return null;
+            return Optional.empty();
         }
 
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
-                return cookie;
+                return Optional.of(cookie.getValue());
             }
         }
-        return null;
+
+        return Optional.empty();
     }
 }

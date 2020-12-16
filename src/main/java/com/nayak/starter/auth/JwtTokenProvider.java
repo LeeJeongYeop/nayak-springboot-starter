@@ -2,7 +2,6 @@ package com.nayak.starter.auth;
 
 import java.util.Date;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -43,12 +42,8 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request) {
         // if you use cookies, you need to check the referrer.
-        Cookie tokenCookie = CookieUtils.getCookie(request, "X-AUTH-TOKEN");
-        if (tokenCookie != null) {
-            return tokenCookie.getValue();
-        }
-
-        return request.getHeader("X-AUTH-TOKEN");
+        return CookieUtils.getCookieValue(request, "X-AUTH-TOKEN")
+            .orElse(request.getHeader("X-AUTH-TOKEN"));
     }
 
     public boolean validateToken(String jwtToken) {
